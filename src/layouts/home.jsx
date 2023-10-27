@@ -5,7 +5,7 @@ import FaceRecognition from "../component/faceRecognition";
 const Home = () => {
     const [imageURL, setImageURL] = useState('')
     const [linkInput, setLinkInput] = useState('')
-    const [faceBox, setFaceBox] = useState({})
+    const [faceBoxes, setFaceBoxes] = useState([])
 
     useEffect(() => {
         if (imageURL === "") return;
@@ -15,7 +15,7 @@ const Home = () => {
             const data = await response.json();
     
             try {
-                setFaceBox(computeFaceBoxArea(data));
+                setFaceBoxes(computeFaceBoxArea(data));
             }
             catch(err) {
                 console.log(err)
@@ -24,19 +24,26 @@ const Home = () => {
         }, [imageURL])
 
     const computeFaceBoxArea = (data) => {
-        const faceArea = data.outputs[0].data.regions[0].region_info.bounding_box;
-        const image = document.getElementById('imageInput');
-        const width = Number(image.width)
-        const height = Number(image.height)
+        const faceBoxes = [];
+        const regions = data.outputs[0].data.regions;
 
-        const dimensions = {
-            leftCol: faceArea.left_col * width,
-            topRow: faceArea.top_row * height,
-            rightCol: width - (width * faceArea.right_col),
-            bottomRow: height - (height * faceArea.bottom_row),
-        }
+        regions.forEach((region) => {
+            const faceArea = region.region_info.bounding_box;
+            const image = document.getElementById('imageInput');
+            const width = Number(image.width)
+            const height = Number(image.height)
+    
+            const dimensions = {
+                id: region.id,
+                leftCol: faceArea.left_col * width,
+                topRow: faceArea.top_row * height,
+                rightCol: width - (width * faceArea.right_col),
+                bottomRow: height - (height * faceArea.bottom_row),
+            }
+             faceBoxes.push(dimensions)
+        })
 
-        return dimensions
+        return faceBoxes;
     }
 
     const returnClarifaiReqeuestOption = (imageURL) => {
@@ -91,7 +98,7 @@ const Home = () => {
                 linkInput={linkInput}/>
             <FaceRecognition 
                 imageURL={imageURL} 
-                faceBox={faceBox}/>
+                faceBoxes={faceBoxes}/>
         </>
     )
 }

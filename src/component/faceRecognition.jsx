@@ -1,10 +1,15 @@
-const FaceRecognition = ({imageURL, faceBox}) => {
-    const {leftCol, topRow, rightCol, bottomRow} = faceBox;
+import DetectionBox from "./detectionBox";
 
+const FaceRecognition = ({imageURL, faceBoxes}) => {
+    
     return (
         <div className="image-container">
             <img id="imageInput" alt="chosen image" src={imageURL} />
-            <div className="faceBox" style={{top: topRow, right: rightCol, bottom: bottomRow, left:leftCol}}></div>
+            {faceBoxes.map((faceBox) => {
+                return <DetectionBox 
+                            key={faceBox.id}
+                            faceBox={faceBox}/>
+            })}
         </div>
     )
 }
