@@ -5,7 +5,7 @@ const Register = () => {
     return (
         <article class="br2 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw8 center shadow-4">
             <main class="pa4 black-80">
-                <form class="measure center">
+                <form class="measure center"  action="/register" method="post">
 
                     <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
                         <legend class="f4 fw6 ph0 mh0">Register</legend>

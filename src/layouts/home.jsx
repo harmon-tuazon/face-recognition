@@ -11,7 +11,7 @@ const Home = () => {
         if (imageURL === "") return;
 
         const fetchClarifaiRequest = async () => {
-            const response = await fetch("https://api.clarifai.com/v2/models/" + "face-detection" + "/outputs",returnClarifaiReqeuestOption(linkInput));
+            const response = await fetch("https://api.clarifai.com/v2/models/" + "face-detection" + "/outputs", returnClarifaiReqeuestOption(linkInput));
             const data = await response.json();
     
             try {
