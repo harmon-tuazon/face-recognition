@@ -1,20 +1,38 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import ImageLinkForm from "../component/imageLinkForm";
 import FaceRecognition from "../component/faceRecognition";
+import Entries from "../component/entries";
+
+const defaultUser = { id:'',
+                      name: '', 
+                      entries: '',
+                      email: ''    }
 
 const Home = () => {
     const [imageURL, setImageURL] = useState('')
     const [linkInput, setLinkInput] = useState('')
     const [faceBoxes, setFaceBoxes] = useState([])
+    const [userData, setUserData] = useState(defaultUser)
+
+    let location = useLocation();
+
+    useEffect(() => {
+        if (location.state != null) {  
+            setUserData(location.state.user)
+        } else {
+            return
+        }
+    }, [location]) 
 
     useEffect(() => {
         if (imageURL === "") return;
 
         const fetchClarifaiRequest = async () => {
-            const response = await fetch("https://api.clarifai.com/v2/models/" + "face-detection" + "/outputs", returnClarifaiReqeuestOption(linkInput));
-            const data = await response.json();
-    
             try {
+                const response = await fetch("https://api.clarifai.com/v2/models/" + "face-detection" + "/outputs", returnClarifaiReqeuestOption(linkInput));
+                const data = await response.json();
+
                 setFaceBoxes(computeFaceBoxArea(data));
             }
             catch(err) {
@@ -90,8 +108,10 @@ const Home = () => {
         setImageURL(linkInput);
     }
 
+
     return (
         <>
+            <Entries userData={userData}/>
             <ImageLinkForm 
                 handleClick={handleClick} 
                 handleChange={handleChange} 

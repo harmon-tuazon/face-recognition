@@ -34,11 +34,11 @@ const Signin = () => {
                                                           password: password                                   
                                                                              })
                                 })
-            const data = await response.json()
+            const user = await response.json()
 
-            if (response.status !== 400) {
+            if (user.id) {
                 setIsSignedOut(false)
-                navigate("/")
+                navigate("/", { state: {user}})
             }
         } catch(err) {
            console.log(err)
