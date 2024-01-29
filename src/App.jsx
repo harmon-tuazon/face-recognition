@@ -4,11 +4,13 @@ import Signin from './layouts/signin'
 import Navigation from './layouts/navigation'
 import Register from './layouts/register'
 import ErrorPage from './layouts/errorPage'
+import Profile from './layouts/profile'
 import { Route, 
          RouterProvider, 
          createBrowserRouter, 
          createRoutesFromElements } from 'react-router-dom'
 import './App.scss'
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +19,7 @@ const router = createBrowserRouter(
       <Route path="about" element={<About />} />
       <Route path="sign-in" element={<Signin />} />
       <Route path="register" element={<Register />} />
+      <Route path="profile" element={<Profile />} />
       <Route path="*" element={<ErrorPage/>} />
     </Route>
   )

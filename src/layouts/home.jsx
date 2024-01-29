@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
+import { Context } from "./navigation";
 import ImageLinkForm from "../component/imageLinkForm";
 import FaceRecognition from "../component/faceRecognition";
 import Entries from "../component/entries";
@@ -9,21 +10,21 @@ const defaultUser = { id:'',
                       entries: '',
                       email: ''    }
 
+
+
 const Home = () => {
     const [imageURL, setImageURL] = useState('')
     const [linkInput, setLinkInput] = useState('')
     const [faceBoxes, setFaceBoxes] = useState([])
-    const [userData, setUserData] = useState(defaultUser)
-
+    const [userData, setUserData] = useContext(Context)
+    
     let location = useLocation();
 
     useEffect(() => {
-        if (location.state != null) {  
-            setUserData(location.state.user)
-        } else {
-            return
-        }
-    }, [location]) 
+        location.state ? setUserData(location.state.user) 
+                       : setUserData(defaultUser) ;  
+    }, []) 
+
 
     useEffect(() => {
         if (imageURL === "") return;
