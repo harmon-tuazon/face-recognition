@@ -45,6 +45,20 @@ const Signin = () => {
         }
     } 
 
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/signin')
+            const loggedOut = await response.json()
+
+            if (loggedOut === "/") {
+                setIsSignedOut(true)
+                navigate("/")
+            }
+        } catch(err) {
+           console.log(err)
+        }
+    }
+
     return (
         <>
         {isSignedOut ? 
@@ -96,7 +110,11 @@ const Signin = () => {
                     <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                         <legend className="f4 fw6 ph0 mh0">We hate to see you leave...</legend>
                         <div className="mt4">
-                            <input className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="button" value="Sign Out"/>
+                            <input 
+                                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
+                                type="button" 
+                                value="Sign Out"
+                                onClick={handleLogout}/>
                         </div>
                     </fieldset>
                 </form>

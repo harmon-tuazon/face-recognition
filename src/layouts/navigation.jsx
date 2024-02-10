@@ -31,7 +31,8 @@ export const Navigation = () => {
                         </NavLink>
                     <div className="nav-links">
                         <NavLink to="about">About</NavLink>
-                        <NavLink to="sign-in">Sign-in</NavLink>
+                        <NavLink to="sign-in">{userData != defaultUser ? "Sign-in":
+                            "Sign-out"}</NavLink>
                     </div>
                 </header>
                 <main className='recognition-container'>

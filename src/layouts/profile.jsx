@@ -22,12 +22,13 @@ const Profile = () => {
                                    method: 'post',
                                    headers: {"Content-Type": "application/json"},
                                    body: JSON.stringify({
-                                           name: fullname, 
+                                           name: name, 
                                            email: email,
                                    })})
            const data = await response.json()
            
            if (data.status === 201) {
+            console.log("update success")
            }
        } catch(err) {
            console.log(err)
@@ -43,19 +44,33 @@ const Profile = () => {
                     <h1>User Profile</h1>
                 </div>
                 <div>
-                    <input type="text" id="name" name="name" value={name} onInput={handleCredentialChange} />
+                    <input type="text"
+                           id="name" 
+                           name="name" 
+                           value={name}
+                           onInput={handleCredentialChange} />
                     <span>Username</span>
                 </div>
                 <div>
-                    <input type="email" id="username" name="username" value={email}  onInput={handleCredentialChange} />
+                    <input type="email" 
+                           id="username" 
+                           name="username" 
+                           value={email}  
+                           onInput={handleCredentialChange} />
                     <span>Email</span>
                 </div>
                 <div>
-                    <h2 type="number" id="entries" name="entries" value={entries} />
+                    <h2 type="number" 
+                        id="entries" 
+                        name="entries" 
+                        value={entries} />
                     <span>Entries</span>
                 </div>
                 <div>
-                    <h2 type="date" id="joined" name="joined" value={joined} />
+                    <h2 type="date" 
+                        id="joined" 
+                        name="joined" 
+                        value={joined} />
                     <span>Date Joined</span>
                 </div>
                 <div>
